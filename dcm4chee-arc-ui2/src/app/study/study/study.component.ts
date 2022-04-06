@@ -876,6 +876,9 @@ export class StudyComponent implements OnInit, OnDestroy, AfterContentChecked{
                     this.retrieveObject(id.level, model);
                 }
             }
+            if(id.action === "export_to_jpeg") {
+                this.exportToJPEG(model);
+            }
             if(id.action === "edit_study"){
                 this.editStudy(model);
             }
@@ -5016,6 +5019,25 @@ export class StudyComponent implements OnInit, OnDestroy, AfterContentChecked{
             study.attrs,
             "study"
         );
+    };
+    exportToJPEG(inst) {
+        let urlObservable: Observable<string>;
+
+        this.service.getTokenService(this.studyWebService).subscribe((response)=> {
+            urlObservable = this.service.wadoURL(this.studyWebService, inst.wadoQueryParams, {contentType: 'image/jpeg'});
+
+            urlObservable.subscribe(url=> {
+                const urlParams = new URLSearchParams(url);
+                const fileName = urlParams.get('objectUID');
+
+                var el = document.createElement("a");
+                el.setAttribute("href", url);
+                el.setAttribute("download", fileName + ".jpeg");
+                document.body.appendChild(el);
+                el.click();
+                el.remove();
+            })
+        })
     };
     exportSeries(series) {
         this.exporter(
