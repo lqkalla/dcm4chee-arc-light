@@ -2669,6 +2669,26 @@ export class StudyService {
                                     id: 'action-studies-download',
                                     param: 'visible'
                                 }
+                            },
+                            {
+                                icon: {
+                                    tag: 'span',
+                                    cssClass: 'glyphicon glyphicon-download-alt',
+                                    text: '',
+                                },
+                                click: (e) => {
+                                    actions.call($this, {
+                                        event: "click",
+                                        level: "instance",
+                                        action: "export_to_jpeg"
+                                    }, e);
+                                },
+                                id: "instance_export_jpeg",
+                                title: $localize `:@@study.export_jpeg:Export JPEG`,
+                                permission: {
+                                    id: 'action-studies-download',
+                                    param: 'visible'
+                                }
                             },{
                                 icon: {
                                     tag: 'span',
